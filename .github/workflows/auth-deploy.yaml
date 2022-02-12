@@ -19,3 +19,8 @@ jobs:
           DOCKER_ID: $({ secrets.DOCKER_ID})
           DOCKER_PASSWORD: $({ secrets.DOCKER_PASSWORD})
       - run: docker push simkamax777/auth
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: $({ secrets.DIGITALOCEAN_ACCESS_TOKEN})
+      - run: doctl kubernetes cluster kubeconfig save 'name of cluster'
+      - run: kubectl rollout restart deployment auth-depl
